@@ -1,0 +1,38 @@
+import random
+
+def generate_four_digit_number():
+    while True:
+        number = random.randint(1000, 9999)  # 1000부터 9999 사이의 숫자 중 하나를 랜덤으로 선택
+        a = number // 1000
+        b = (number // 100) % 10
+        c = (number // 10) % 10
+        d = number % 10
+
+        if len(set([a, b, c, d])) == 4 and a + b + c + d == 21:  # 중복되는 숫자가 없고, 합이 21인 경우
+            return number, a, b, c, d
+
+def generate_numbers_with_sum_21(num_iterations):
+    results = []
+    filtered_results = []
+
+    while len(filtered_results) < num_iterations:
+        four_digit_number, a, b, c, d = generate_four_digit_number()
+        results.append((four_digit_number, a, b, c, d))
+        if a + b + c + d == 21:
+            filtered_results.append((four_digit_number, a, b, c, d))
+
+    return filtered_results
+
+# 1000번 반복하여 합이 21인 네 자리 수 생성
+filtered_results = generate_numbers_with_sum_21(1000)
+
+# 결과 출력
+for result in filtered_results:
+    four_digit_number, a, b, c, d = result
+    print(f"생성된 네 자리 수: {four_digit_number}")
+    print(f"천의 자리: {a}")
+    print(f"백의 자리: {b}")
+    print(f"십의 자리: {c}")
+    print(f"일의 자리: {d}")
+    print(f"각 자릿수의 합: {a + b + c + d}")
+    print()
